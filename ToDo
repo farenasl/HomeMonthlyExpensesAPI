@@ -1,0 +1,4 @@
+Add expenses to the user model
+Get subdocuments in object. ie. User has an array of salaries, we should receive it in a user request
+Create swagger to document the api
+Complete readme.md file
