@@ -2,8 +2,6 @@
 
 module.exports = function(app) {
     var user = require('../controllers/UserController');
-    var salary = require('../controllers/SalaryController');
-    var expense = require('../controllers/ExpenseController');
 
     app.route('/users')
         .get(user.get_all_users)
@@ -15,23 +13,23 @@ module.exports = function(app) {
         .put(user.update_an_user)
         .delete(user.delete_an_user);
 
-    app.route('/salaries')
-        .get(salary.get_all_salaries)
-        .post(salary.insert_a_salary)
-        .delete(salary.delete_all_salaries);
+    app.route('/users/:userId/expenses')
+        .get(user.get_all_expenses_by_user)
+        .post(user.insert_an_expense_by_user)
+        .delete(user.delete_all_expenses);
 
-    app.route('/salaries/:salaryId')
-        .get(salary.get_a_salary)
-        .put(salary.update_a_salary)
-        .delete(salary.delete_a_salary);
+    app.route('/users/:userId/expenses/:expenseId')
+        .get(user.get_an_expense)
+        .put(user.update_an_expense)
+        .delete(user.delete_an_expense);
 
-    app.route('/expenses')
-        .get(expense.get_all_expenses)
-        .post(expense.insert_an_expense)
-        .delete(expense.delete_all_expenses);
+    app.route('/users/:userId/salaries')
+        .get(user.get_all_salaries_by_user)
+        .post(user.insert_a_salary_by_user)
+        .delete(user.delete_all_salaries);
 
-    app.route('/expenses/:expenseId')
-        .get(expense.get_an_expense)
-        .put(expense.update_an_expense)
-        .delete(expense.delete_an_expense);
+    app.route('/users/:userId/salaries/:salaryId')
+        .get(user.get_a_salary)
+        .put(user.update_a_salary)
+        .delete(user.delete_a_salary);
 };
