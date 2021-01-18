@@ -21,10 +21,6 @@ var ExpenseSchema = new Schema({
     type: String,
     required: 'Kindly enter the expense description'
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   created_date: {
     type: Date,
     default: Date.now

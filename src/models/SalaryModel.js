@@ -12,11 +12,6 @@ var SalarySchema = new Schema({
     type: Date,
     required: 'Kindly enter the salary settlement date'
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
   created_date: {
     type: Date,
     default: Date.now
