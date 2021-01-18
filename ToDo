@@ -2,3 +2,5 @@ Add expenses to the user model
 Get subdocuments in object. ie. User has an array of salaries, we should receive it in a user request
 Create swagger to document the api
 Complete readme.md file
+Create mongodb for production, we're currently using atlas mongo tinpetdb
+Verify update if no all fields are in req.body ... what will going to happen, put null or dont update, dont update is correct behavior
