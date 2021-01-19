@@ -7,7 +7,9 @@ var express = require('express'),
   User = require('./models/UserModel'),
   Salary = require('./models/SalaryModel'),
   Expense = require('./models/ExpenseModel'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  swaggerUi = require('swagger-ui-express'),
+  swaggerDocument = require('../swagger.json');
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -15,6 +17,10 @@ mongoose.connect(process.env.CUSTOMCONNSTR_DATABASE_CONNECTION_STRING, { useUnif
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// router.use('/api-docs', swaggerUi.serve);
+// router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+//replace next line with router file, example two lines up
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 var routes = require('./routes/HMERoutes'); //importing route
 routes(app); //register the route
