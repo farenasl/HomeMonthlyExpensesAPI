@@ -5,3 +5,5 @@ Complete readme.md file
 Create mongodb for production, we're currently using atlas mongo tinpetdb
 Verify update if no all fields are in req.body ... what will going to happen, put null or dont update, dont update is correct behavior
 Move swagger routes to specific routes file and import in server.js ... doc in https://www.npmjs.com/package/swagger-ui-express
+Generate readme.md doc
+Generate changelog file
