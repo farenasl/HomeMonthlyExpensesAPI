@@ -7,3 +7,4 @@ Verify update if no all fields are in req.body ... what will going to happen, pu
 Move swagger routes to specific routes file and import in server.js ... doc in https://www.npmjs.com/package/swagger-ui-express
 Generate readme.md doc
 Generate changelog file
+Validate if update with salaries and expenses add these to the system or not
