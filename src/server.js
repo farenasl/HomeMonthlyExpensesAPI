@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 //replace next line with router file, example two lines up
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
-var routes = require('./routes/HMERoutes'); //importing route
+var routes = require('./routes/CuadremosRoutes'); //importing route
 routes(app); //register the route
 
 app.use(function(req, res) {

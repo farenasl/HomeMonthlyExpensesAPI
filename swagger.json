@@ -1,11 +1,11 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Home Monthly Expenses API",
-        "description": "This is the API to manage the home monthly expenses. You can find out more about us in [https://hme.com](https://hme.com). For testing purpose, you can use the api key `special-key` to test the authorization filters.",
-        "termsOfService": "https://hme.com/terms/",
+        "title": "Cuadremos API",
+        "description": "This is the API to manage and split the expenses that some group could have. You can find out more about us in [https://cuadremos.cl](https://cuadremos.cl). For testing purpose, you can use the api key `special-key` to test the authorization filters.",
+        "termsOfService": "https://cuadremos.cl/terms/",
         "contact": {
-            "email": "contact@hme.com"
+            "email": "contact@cuadremos.cl"
         },
         "license": {
             "name": "MIT",
@@ -19,10 +19,10 @@
     },
     "servers": [
         {
-            "url": "https://hme.com/v0-0-1"
+            "url": "https://cuadremos.cl/v0-0-1"
         },
         {
-            "url": "http://hme.com/v0-0-1"
+            "url": "http://cuadremos.cl/v0-0-1"
         }
     ],
     "tags": [
@@ -31,7 +31,7 @@
             "description": "API operations for users in the system",
             "externalDocs": {
                 "description": "Find out more about ",
-                "url": "https://hme.com/login"
+                "url": "https://cuadremos.cl/login"
             }
         }
     ],
@@ -64,7 +64,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -95,7 +95,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -134,7 +134,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -170,7 +170,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -201,7 +201,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -240,7 +240,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -276,7 +276,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -307,7 +307,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -346,7 +346,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -382,7 +382,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -413,7 +413,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -452,7 +452,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -485,7 +485,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -516,7 +516,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -555,7 +555,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -588,7 +588,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -619,7 +619,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -658,7 +658,7 @@
                 },
                 "security": [
                     {
-                        "hme_auth": [
+                        "cuadremos_auth": [
                             "write:users",
                             "read:users"
                         ]
@@ -876,11 +876,11 @@
             }
         },
         "securitySchemes": {
-            "hme_auth": {
+            "cuadremos_auth": {
                 "type": "oauth2",
                 "flows": {
                     "implicit": {
-                        "authorizationUrl": "http://hme.com/oauth/dialog",
+                        "authorizationUrl": "http://cuadremos.cl/oauth/dialog",
                         "scopes": {
                             "write:users": "modify users in your account",
                             "read:users": "read your users"
