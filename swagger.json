@@ -1,203 +1,627 @@
 {
-    "swagger": "2.0",
+    "openapi": "3.0.1",
     "info": {
-        "version": "3.0.0",
         "title": "Home Monthly Expenses API",
-        "description": "API to manage the home monthly expenses",
+        "description": "This is the API to manage the home monthly expenses. You can find out more about us in [https://hme.com](https://hme.com). For testing purpose, you can use the api key `special-key` to test the authorization filters.",
+        "termsOfService": "https://hme.com/terms/",
+        "contact": {
+            "email": "contact@hme.com"
+        },
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
-        }
+        },
+        "version": "0.0.1"
     },
-    "host": "localhost:3000",
-    "basePath": "/",
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "servers": [
+        {
+            "url": "https://hme.com/v0-0-1"
+        },
+        {
+            "url": "http://hme.com/v0-0-1"
+        }
+    ],
     "tags": [
         {
-            "name": "Users",
-            "description": "API for users in the system"
+            "name": "User",
+            "description": "API operations for users in the system",
+            "externalDocs": {
+                "description": "Find out more about ",
+                "url": "https://hme.com/login"
+            }
         }
-    ],
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
     ],
     "paths": {
         "/users": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete all users",
+                "description": "This is the operation to delete all users in the system.",
+                "operationId": "delete_all_users",
+                "responses": {
+                    "200": {
+                        "description": "Users found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
             "get": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "summary": "Get all users in system",
+                "summary": "Get all users",
+                "description": "This is the operation to get all users in the system.",
+                "operationId": "get_all_users",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Users"
+                        "description": "Users found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserModel"
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            }
-        },
-        "/addUser": {
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
             "post": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "description": "Create new user in system",
+                "summary": "Create an user",
+                "description": "This is the operation to create new users in the system.",
+                "operationId": "insert_an_user",
+                "requestBody": {
+                    "description": "Create user object",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/user/createWithArray": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Creates list of users with given input array",
+                "operationId": "createUsersWithArrayInput",
+                "requestBody": {
+                    "description": "List of user object",
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "default": {
+                        "description": "successful operation",
+                        "content": {}
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            }
+        },
+        "/user/createWithList": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Creates list of users with given input array",
+                "operationId": "createUsersWithListInput",
+                "requestBody": {
+                    "description": "List of user object",
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "default": {
+                        "description": "successful operation",
+                        "content": {}
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            }
+        },
+        "/user/login": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logs user into the system",
+                "operationId": "loginUser",
                 "parameters": [
                     {
-                        "name": "user",
-                        "in": "body",
-                        "description": "User that we want to create",
+                        "name": "username",
+                        "in": "query",
+                        "description": "The user name for login",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "The password for login in clear text",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
-                "produces": [
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
-                        "description": "New user is created",
-                        "schema": {
-                            "$ref": "#/definitions/User"
+                        "description": "successful operation",
+                        "headers": {
+                            "X-Rate-Limit": {
+                                "description": "calls per hour allowed by the user",
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            },
+                            "X-Expires-After": {
+                                "description": "date in UTC when token expires",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
                         }
+                    },
+                    "400": {
+                        "description": "Invalid username/password supplied",
+                        "content": {}
                     }
                 }
             }
         },
-        "/user/{id}": {
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "description": "ID of user that we want to find",
-                    "type": "integer"
-                }
-            ],
-            "put": {
-                "summary": "Update user with give ID",
+        "/user/logout": {
+            "get": {
                 "tags": [
-                    "Users"
+                    "user"
                 ],
+                "summary": "Logs out current logged in user session",
+                "operationId": "logoutUser",
+                "responses": {
+                    "default": {
+                        "description": "successful operation",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/user/{username}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user by user name",
+                "operationId": "getUserByName",
                 "parameters": [
                     {
-                        "name": "user",
-                        "in": "body",
-                        "description": "User with new values of properties",
+                        "name": "username",
+                        "in": "path",
+                        "description": "The name that needs to be fetched. Use user1 for testing. ",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/updateUser"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "User is updated",
+                        "description": "successful operation",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid username supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {}
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Updated user",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated user object",
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid user supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {}
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            },
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete user",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "The name that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid username supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {}
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ExpenseModel": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "MongoDB autogenerated id"
+                    },
+                    "total": {
+                        "type": "string",
+                        "description": "User's expense total"
+                    },
+                    "personal_total": {
+                        "type": "string",
+                        "description": "User's non-cumulative expense amount"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Expense description comment"
+                    },
+                    "expense_date": {
+                        "type": "string",
+                        "description": "User's expense date",
+                        "format": "date-time"
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "description": "User's expense creation date in the system",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "total",
+                    "description",
+                    "expense_date"
+                ]
+            },
+            "SalaryModel": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "MongoDB autogenerated id"
+                    },
+                    "total": {
+                        "type": "string",
+                        "description": "User's salary amount"
+                    },
+                    "salary_date": {
+                        "type": "string",
+                        "description": "User's salary date",
+                        "format": "date-time"
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "description": "User's salary creation date in the system",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "total",
+                    "salary_date"
+                ]
+            },
+            "UserModel": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "MongoDB autogenerated id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Names of the user"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "description": "Lastnames of the user"
+                    },
+                    "mail": {
+                        "type": "string",
+                        "description": "Email of the user"
+                    },
+                    "mobile_number": {
+                        "type": "string",
+                        "description": "Mobile phone number of the user"
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "description": "User's creation date in the system",
+                        "format": "date-time"
+                    },
+                    "salaries": {
+                        "type": "array",
+                        "description": "Array with user's salaries",
+                        "items": {
+                            "$ref": "#/components/schemas/SalaryModel"
+                        }
+                    },
+                    "expenses": {
+                        "type": "array",
+                        "description": "Array with user's expenses",
+                        "items": {
+                            "$ref": "#/components/schemas/ExpenseModel"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "lastname",
+                    "mail",
+                    "mobile_number"
+                ],
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "ExpenseRequestBody": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "string",
+                        "description": "User's expense total"
+                    },
+                    "personal_total": {
+                        "type": "string",
+                        "description": "User's non-cumulative expense amount"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Expense description comment"
+                    },
+                    "expense_date": {
+                        "type": "string",
+                        "description": "User's expense date",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "total",
+                    "description",
+                    "expense_date"
+                ]
+            },
+            "SalaryRequestBody": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "string",
+                        "description": "User's salary amount"
+                    },
+                    "salary_date": {
+                        "type": "string",
+                        "description": "User's salary date",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "total",
+                    "salary_date"
+                ]
+            },
+            "UserRequestBody": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Names of the user"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "description": "Lastnames of the user"
+                    },
+                    "mail": {
+                        "type": "string",
+                        "description": "Email of the user"
+                    },
+                    "mobile_number": {
+                        "type": "string",
+                        "description": "Mobile phone number of the user"
+                    },
+                    "salaries": {
+                        "type": "array",
+                        "description": "Array with user's salaries",
+                        "items": {
+                            "$ref": "#/components/schemas/SalaryRequestBody"
+                        }
+                    },
+                    "expenses": {
+                        "type": "array",
+                        "description": "Array with user's expenses",
+                        "items": {
+                            "$ref": "#/components/schemas/ExpenseRequestBody"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "lastname",
+                    "mail",
+                    "mobile_number"
+                ],
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "hme_auth": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "http://hme.com/oauth/dialog",
+                        "scopes": {
+                            "write:users": "modify users in your account",
+                            "read:users": "read your users"
                         }
                     }
                 }
             },
-            "delete": {
-                "summary": "Delete user with given ID",
-                "tags": [
-                    "Users"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User is deleted",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "User": {
-            "required": [
-                "name",
-                "_id",
-                "companies"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "integer",
-                    "uniqueItems": true
-                },
-                "isPublic": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "books": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "amount": {
-                                "type": "number"
-                            }
-                        }
-                    }
-                },
-                "companies": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "Users": {
-            "type": "array",
-            "$ref": "#/definitions/User"
-        },
-        "updateUser": {
-            "required": [
-                "name",
-                "companies"
-            ],
-            "properties": {
-                "isPublic": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "books": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "amount": {
-                                "type": "number"
-                            }
-                        }
-                    }
-                },
-                "companies": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_key",
+                "in": "header"
             }
         }
     }
