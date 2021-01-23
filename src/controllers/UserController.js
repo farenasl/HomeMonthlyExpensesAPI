@@ -13,7 +13,7 @@ exports.delete_all_users = function(req, res) {
     });
 };
 
-exports.delete_an_expense = async function(req, res) {
+exports.delete_an_expense_by_user = async function(req, res) {
     const user = await User.findOne({_id: req.params.userId});
     user.expenses.pull({ _id: req.params.expenseId });
     user.save(function(err, user) {
@@ -23,7 +23,7 @@ exports.delete_an_expense = async function(req, res) {
     });
 };
 
-exports.delete_a_salary = async function(req, res) {
+exports.delete_a_salary_by_user = async function(req, res) {
     const user = await User.findOne({_id: req.params.userId});
     user.salaries.pull({ _id: req.params.salaryId });
     user.save(function(err, user) {
@@ -33,7 +33,7 @@ exports.delete_a_salary = async function(req, res) {
     });
 };
 
-exports.delete_all_expenses = async function(req, res) {
+exports.delete_all_expenses_by_user = async function(req, res) {
     const user = await User.findOne({_id: req.params.userId});
     const items = user.expenses.length;
     user.expenses = [];
@@ -44,7 +44,7 @@ exports.delete_all_expenses = async function(req, res) {
     });
 };
 
-exports.delete_all_salaries = async function(req, res) {
+exports.delete_all_salaries_by_user = async function(req, res) {
     const user = await User.findOne({_id: req.params.userId});
     const items = user.salaries.length;
     user.salaries = [];
@@ -87,7 +87,7 @@ exports.get_all_salaries_by_user = function(req, res) {
     });
 };
 
-exports.get_an_expense = async function(req, res) {
+exports.get_an_expense_by_user = async function(req, res) {
     User.findById(req.params.userId, function(err, user) {
         if (err)
             res.send(err);
@@ -95,7 +95,7 @@ exports.get_an_expense = async function(req, res) {
     });
 };
 
-exports.get_a_salary = async function(req, res) {
+exports.get_a_salary_by_user = async function(req, res) {
     User.findById(req.params.userId, function(err, user) {
         if (err)
             res.send(err);
@@ -142,7 +142,7 @@ exports.insert_an_user = function(req, res) {
     });
 };
 
-exports.update_a_salary = function(req, res) {
+exports.update_a_salary_by_user = function(req, res) {
     User.findOneAndUpdate({
         _id: req.params.userId,
         salaries: {
@@ -161,7 +161,7 @@ exports.update_a_salary = function(req, res) {
         });
 };
 
-exports.update_an_expense = function(req, res) {
+exports.update_an_expense_by_user = function(req, res) {
     User.findOneAndUpdate({
         _id: req.params.userId,
         expenses: {
