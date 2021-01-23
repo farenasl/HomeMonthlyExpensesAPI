@@ -20,6 +20,10 @@ var UserSchema = new Schema({
     type: String,
     required: 'Kindly enter your phone number'
   },
+  created_date: {
+    type: Date,
+    default: Date.now
+  },
   salaries: [{
       total: {
         type: Number,
@@ -56,11 +60,7 @@ var UserSchema = new Schema({
       type: Date,
       default: Date.now
     }
-  }],
-  created_date: {
-    type: Date,
-    default: Date.now
-  }
+  }]
 });
 
 module.exports = mongoose.model('User', UserSchema);
