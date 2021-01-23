@@ -46,14 +46,16 @@
                 "operationId": "delete_all_users",
                 "responses": {
                     "200": {
-                        "description": "Users found",
+                        "description": "Users deleted",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "additionalProperties": {
-                                        "type": "integer",
-                                        "format": "int32"
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message confirming quantity of users deleted"
+                                        }
                                     }
                                 }
                             }
@@ -108,7 +110,7 @@
                 "description": "This is the operation to create new users in the system.",
                 "operationId": "insert_an_user",
                 "requestBody": {
-                    "description": "Create user object",
+                    "description": "User creation",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -140,260 +142,528 @@
                 ]
             }
         },
-        "/user/createWithArray": {
-            "post": {
+        "/users/{userId}": {
+            "delete": {
                 "tags": [
-                    "user"
+                    "User"
                 ],
-                "summary": "Creates list of users with given input array",
-                "operationId": "createUsersWithArrayInput",
-                "requestBody": {
-                    "description": "List of user object",
-                    "content": {
-                        "*/*": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "default": {
-                        "description": "successful operation",
-                        "content": {}
-                    }
-                },
-                "x-codegen-request-body-name": "body"
-            }
-        },
-        "/user/createWithList": {
-            "post": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Creates list of users with given input array",
-                "operationId": "createUsersWithListInput",
-                "requestBody": {
-                    "description": "List of user object",
-                    "content": {
-                        "*/*": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "default": {
-                        "description": "successful operation",
-                        "content": {}
-                    }
-                },
-                "x-codegen-request-body-name": "body"
-            }
-        },
-        "/user/login": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Logs user into the system",
-                "operationId": "loginUser",
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "query",
-                        "description": "The user name for login",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "The password for login in clear text",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "summary": "Delete an users",
+                "description": "This is the operation to delete an specific user in the system.",
+                "operationId": "delete_an_user",
                 "responses": {
                     "200": {
-                        "description": "successful operation",
-                        "headers": {
-                            "X-Rate-Limit": {
-                                "description": "calls per hour allowed by the user",
-                                "schema": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                }
-                            },
-                            "X-Expires-After": {
-                                "description": "date in UTC when token expires",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                }
-                            }
-                        },
+                        "description": "Specific user deleted",
                         "content": {
-                            "application/xml": {
-                                "schema": {
-                                    "type": "string"
-                                }
-                            },
                             "application/json": {
                                 "schema": {
-                                    "type": "string"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message confirming user deletion"
+                                        }
+                                    }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Invalid username/password supplied",
-                        "content": {}
                     }
-                }
-            }
-        },
-        "/user/logout": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Logs out current logged in user session",
-                "operationId": "logoutUser",
-                "responses": {
-                    "default": {
-                        "description": "successful operation",
-                        "content": {}
-                    }
-                }
-            }
-        },
-        "/user/{username}": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Get user by user name",
-                "operationId": "getUserByName",
-                "parameters": [
+                },
+                "security": [
                     {
-                        "name": "username",
-                        "in": "path",
-                        "description": "The name that needs to be fetched. Use user1 for testing. ",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
                     }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "User"
                 ],
+                "summary": "Get an user",
+                "description": "This is the operation to get an specific user in the system.",
+                "operationId": "get_an_user",
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Specific user found",
                         "content": {
-                            "application/xml": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserModel"
+                                    }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Invalid username supplied",
-                        "content": {}
-                    },
-                    "404": {
-                        "description": "User not found",
-                        "content": {}
                     }
-                }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
             },
             "put": {
                 "tags": [
-                    "user"
+                    "User"
                 ],
-                "summary": "Updated user",
-                "description": "This can only be done by the logged in user.",
-                "operationId": "updateUser",
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "name that need to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
+                "summary": "Update an specific user",
+                "description": "This is the operation to update an existing user in the system.",
+                "operationId": "update_an_user",
                 "requestBody": {
-                    "description": "Updated user object",
+                    "description": "Specific user updating",
                     "content": {
-                        "*/*": {
+                        "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/UserRequestBody"
                             }
                         }
                     },
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Invalid user supplied",
-                        "content": {}
-                    },
-                    "404": {
-                        "description": "User not found",
-                        "content": {}
-                    }
-                },
-                "x-codegen-request-body-name": "body"
-            },
-            "delete": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Delete user",
-                "description": "This can only be done by the logged in user.",
-                "operationId": "deleteUser",
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "The name that needs to be deleted",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                    "200": {
+                        "description": "User successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
                         }
                     }
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Invalid username supplied",
-                        "content": {}
-                    },
-                    "404": {
-                        "description": "User not found",
-                        "content": {}
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
                     }
-                }
+                ]
+            }
+        },
+        "/users/{userId}/expenses": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete all expenses of an user",
+                "description": "This is the operation to delete all expenses of an specific user in the system.",
+                "operationId": "delete_all_expenses_by_user",
+                "responses": {
+                    "200": {
+                        "description": "User's expenses deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message confirming user-expenses deletion"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all expenses of an user",
+                "description": "This is the operation to get all expenses of an specific user in the system.",
+                "operationId": "get_all_expenses_by_user",
+                "responses": {
+                    "200": {
+                        "description": "Specific user-expenses found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExpenseModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new expense for an specific user",
+                "description": "This is the operation to create a new expense for an existing user in the system.",
+                "operationId": "insert_an_expense_by_user",
+                "requestBody": {
+                    "description": "Specific user-expense creation",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExpenseRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/salaries": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete all salaries of an user",
+                "description": "This is the operation to delete all salaries of an specific user in the system.",
+                "operationId": "delete_all_salaries_by_user",
+                "responses": {
+                    "200": {
+                        "description": "User's salaries deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message confirming user-salaries deletion"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all salaries of an user",
+                "description": "This is the operation to get all salaries of an specific user in the system.",
+                "operationId": "get_all_salaries_by_user",
+                "responses": {
+                    "200": {
+                        "description": "Specific user-salaries found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SalaryModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new salary for an specific user",
+                "description": "This is the operation to create a new salary for an existing user in the system.",
+                "operationId": "insert_an_salary_by_user",
+                "requestBody": {
+                    "description": "Specific user-salary creation",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SalaryRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/expenses/{expenseId}": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete an specific expense of an user",
+                "description": "This is the operation to delete an specific expense of an specific user in the system.",
+                "operationId": "delete_an_expense_by_user",
+                "responses": {
+                    "200": {
+                        "description": "User's expense deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get an specific expense of an specific user",
+                "description": "This is the operation to get an specific expense of an specific user in the system.",
+                "operationId": "get_an_expense_by_user",
+                "responses": {
+                    "200": {
+                        "description": "Specific user-expense found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExpenseModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update an specific expense for an specific user",
+                "description": "This is the operation to update an specific expense for an existing user in the system.",
+                "operationId": "update_an_expense_by_user",
+                "requestBody": {
+                    "description": "Specific user-expense updating",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExpenseRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/salaries/{salaryId}": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete an specific salary of an user",
+                "description": "This is the operation to delete an specific salary of an specific user in the system.",
+                "operationId": "delete_a_salary_by_user",
+                "responses": {
+                    "200": {
+                        "description": "User's salary deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get an specific salary of an specific user",
+                "description": "This is the operation to get an specific salary of an specific user in the system.",
+                "operationId": "get_a_salary_by_user",
+                "responses": {
+                    "200": {
+                        "description": "Specific user-salary found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SalaryModel"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update an specific salary for an specific user",
+                "description": "This is the operation to update an specific salary for an existing user in the system.",
+                "operationId": "update_a_salary_by_user",
+                "requestBody": {
+                    "description": "Specific user-salary updating",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SalaryRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserModel"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hme_auth": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
             }
         }
     },
