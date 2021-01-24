@@ -58,7 +58,7 @@ check command to debug in powershell and ms-dos
 
 ## Try It
 * Run API
-* Open you're browser to [http://localhost:3000](http://localhost:3000)
+* Open your browser to [http://localhost:3000](http://localhost:3000)
 * Invoke the `/healthcheck` endpoint 
   ```shell
   curl localhost:3000/pharma/healthcheck
