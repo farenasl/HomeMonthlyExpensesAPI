@@ -1,10 +1,48 @@
-Add expenses to the user model
-Get subdocuments in object. ie. User has an array of salaries, we should receive it in a user request
-Create swagger to document the api
-Complete readme.md file
-Create mongodb for production, we're currently using atlas mongo tinpetdb
 Verify update if no all fields are in req.body ... what will going to happen, put null or dont update, dont update is correct behavior
 Move swagger routes to specific routes file and import in server.js ... doc in https://www.npmjs.com/package/swagger-ui-express
 Generate readme.md doc
 Generate changelog file
 Validate if update with salaries and expenses add these to the system or not
+Implement auto-generation for swagger-ui
+implement cicd from feature to master
+Allows to attach files for salary (photo/pdf) and expenses (photo/pdf)
+Ref expenses and salaries as models in user model
+puchase cuadremos.cl domain
+upload app in api.cuadremos.cl
+get storage in cloud for photo/pdf files
+implement unit test in the project (cc >= 85%)
+implement jmeter (or nodejs alternativo) test in project
+change name in app/project/git from Home Monthly Expenses to Cuadremos
+implement user login
+implement web app/page
+implement ios app
+implement android app
+do manual QA
+generate pipelines
+implement jwt to consume the api
+implement testing environment for potential clients
+implement dev/qa environments for dev-factory and evolutive changes
+schedule periodic db/app/storage backup
+set a % of division (not considering salaries)
+add logs to the code
+add comments to the code
+add date-filtering requests in api based on: https://github.com/farenasl/studies/tree/master/HackerRank/StockAndTradesAPI
+Add google analytics 
+Add dynatrace
+add swagger badget
+add codecoverage badget
+add sonarqube badget
+add build badget
+validate powershell command in readme.md
+add ms-dos command in readme.md for Starting section
+create healthcheck endpoint
+add debug command for powershell in readme.md
+
+
+Done:
+=====
+Add expenses to the user model
+Get subdocuments in object. ie. User has an array of salaries, we should receive it in a user request
+Create swagger to document the api
+Create mongodb for this project
+Create mongodb for production, we're currently using atlas mongo tinpetdb
